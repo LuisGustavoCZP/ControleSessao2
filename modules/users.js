@@ -37,9 +37,20 @@ function login (req, res)
     } 
     else
     {
+        const user = users[token];
+        if(!user) 
+        {
+            res.cookie('token', ``, { maxAge: 0, httpOnly: true });
+            const page = `<h2>Falha no carregamento do token</h2>`;
+            res.send(page);
+        } 
+        else 
+        {
+            const page = `<h2>Bem vindo ${user.name}</h2>`;
+            res.send(page);
+        }
         //console.log(token);
-        const page = `<h2>Bem vindo ${users[token].name}</h2>`;
-        res.send(page);
+        
     }
 }
 
